@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Independence Day 🇮🇳 – Tricolour Flag</title>
+  <meta name="description" content="A lightweight, responsive Independence Day page with a pure‑CSS waving Indian flag, Ashoka Chakra, fireworks, and a countdown to 15 August." />
+  <meta name="theme-color" content="#138808" />
+  <style>
+    :root {
+      --saffron: #ff9933;
+      --white: #ffffff;
+      --green:  #138808;
+      --navy:   #000080;
+      --bg:     #0b1220;
+      --text:   #e8f1ff;
+      --muted:  #9fb3d1;
+      --card:   #0f172a;
+      --ring:   18px;
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 70% 0%, #12203a 0%, var(--bg) 55%, #060a13 100%);
+      color: var(--text);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100dvh;
+    }
+    header {
+      padding: clamp(16px, 2.5vw, 28px);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .badge {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: linear-gradient(var(--saffron) 33.3%, var(--white) 33.3% 66.6%, var(--green) 66.6%);
+      box-shadow: 0 0 0 2px #0006;
+    }
+    h1 { font-size: clamp(20px, 3.6vw, 36px); margin: 0; letter-spacing: 0.4px; }
+    .muted { color: var(--muted); font-size: 0.95rem; }
+
+    .wrap {
+      display: grid; place-items: center; padding: clamp(16px, 3.5vw, 40px);
+    }
+    .card {
+      width: min(1100px, 92vw);
+      background: linear-gradient(180deg, #0f172a, #0b1329);
+      border: 1px solid #233355;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px #0006, inset 0 1px #ffffff12;
+      padding: clamp(18px, 4.5vw, 36px);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::after{
+      content: ""; position:absolute; inset:-30% -10% auto auto; height: 60%; aspect-ratio: 1/1; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff08 0%, transparent 60%);
+      pointer-events:none;
+    }
+
+    /* Flag Section */
+    .stage {
+      display: grid; grid-template-columns: 1fr; gap: 24px; align-items: center;
+    }
+    @media (min-width: 920px){
+      .stage { grid-template-columns: 1.1fr 1fr; }
+    }
+
+    .flag-area {
+      display:grid; place-items:center; min-height: 360px;
+    }
+    .pole {
+      width: 10px; height: 340px; background: linear-gradient(180deg,#c8c8c8,#8e8e8e);
+      border-radius: 4px; box-shadow: inset 0 0 0 1px #0005;
+      position: relative;
+    }
+    .pole::after{
+      content:""; position:absolute; bottom:-22px; left:50%; translate:-50% 0; width: 140px; height: 22px;
+      background: linear-gradient(#222, #111);
+      border-radius: 6px; box-shadow: 0 10px 20px #0006;
+    }
+
+    .flag {
+      --w: 420px; --h: 280px; /* 3:2 ratio */
+      position: absolute; left: 10px; top: 20px; width: var(--w); height: var(--h);
+      transform-origin: left center; perspective: 900px;
+      filter: drop-shadow(0 10px 16px #0008);
+      animation: sway 6s ease-in-out infinite;
+    }
+    @keyframes sway { 0%,100%{ rotate: -1deg } 50%{ rotate: 1.8deg } }
+
+    .cloth { position: relative; width: 100%; height: 100%; border-radius: 6px 10px 10px 6px; overflow: hidden; }
+
+    /* Waving cloth using layered gradients */
+    .cloth::before {
+      content: ""; position: absolute; inset: 0;
+      background:
+        linear-gradient(var(--saffron) 33.333%, var(--white) 0 66.666%, var(--green) 0),
+        radial-gradient(150% 20% at 0% 50%, #00000030, transparent 60%);
+      mask: linear-gradient(90deg,#000 60%, #0000 85%);
+      animation: wave 2.9s ease-in-out infinite;
+      transform-origin: left center;
+    }
+    @keyframes wave {
+      0%   { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); transform: translateZ(0) rotateY(0deg); }
+      50%  { clip-path: polygon(0 0,97% 6%,95% 94%,0 100%); transform: translateZ(0) rotateY(-6deg); }
+      100% { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); transform: translateZ(0) rotateY(0deg); }
+    }
+
+    /* Ashoka Chakra */
+    .chakra {
+      position: absolute; inset: 0; display: grid; place-items: center;
+    }
+    .chakra .rim {
+      width: calc(var(--ring) * 7.2); height: calc(var(--ring) * 7.2); border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, transparent 43%, var(--navy) 44% 48%, transparent 49%),
+        repeating-conic-gradient(from -3.75deg, var(--navy) 0 1deg, transparent 1deg 7.5deg);
+      -webkit-mask: radial-gradient(circle at 50% 50%, #000 0 50%, transparent 51%);
+      mask: radial-gradient(circle at 50% 50%, #000 0 50%, transparent 51%);
+      animation: spin 12s linear infinite;
+    }
+    @keyframes spin { to { rotate: 360deg } }
+
+    /* Hero content */
+    .hero h2 { font-size: clamp(22px, 4.2vw, 44px); margin: 0 0 6px; }
+    .hero p { margin: 0 0 12px; line-height: 1.6; }
+    .chip {
+      display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+      border:1px solid #24406d; background:#0d1a33; color:#cfe3ff; font-weight:600; letter-spacing:0.3px;
+    }
+
+    .controls { display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }
+    button, .btn {
+      appearance:none; border:none; cursor:pointer; padding:10px 14px; border-radius:12px; font-weight:600;
+      background: #13284d; color:#e6f0ff; border:1px solid #29467a; transition: transform .08s ease, box-shadow .2s;
+      box-shadow: 0 6px 20px #0005;
+    }
+    button:hover{ transform: translateY(-1px); }
+
+    /* Countdown */
+    .countdown { display:flex; gap: 14px; margin-top: 10px; flex-wrap: wrap; }
+    .tile { background:#0e1b33; border:1px solid #274271; border-radius:14px; padding:10px 14px; text-align:center; min-width:84px; }
+    .tile .num { font-size: 26px; font-weight: 800; }
+    .tile .lbl { font-size: 12px; color:#a7bddf; letter-spacing: .3px; }
+
+    /* Fireworks canvas overlay */
+    canvas#fw {
+      position: fixed; inset: 0; pointer-events: none; z-index: 5;
+      mix-blend-mode: screen;
+    }
+
+    footer {
+      padding: 14px clamp(16px, 2.5vw, 28px); color: #9ab3db; text-align: center; font-size: 14px;
+    }
+    a { color: #9dd1ff; }
+
+  </style>
+</head>
+<body>
+  <canvas id="fw" aria-hidden="true"></canvas>
+  <header>
+    <div class="brand" aria-label="Independence Day, India">
+      <span class="badge" aria-hidden="true"></span>
+      <div>
+        <h1>Independence Day • भारत 🇮🇳</h1>
+        <div class="muted">A minimal, fast, accessible tricolour demo</div>
+      </div>
+    </div>
+    <div class="muted" id="today"></div>
+  </header>
+
+  <main class="wrap">
+    <section class="card" aria-label="Waving Indian Flag and celebration">
+      <div class="stage">
+        <div class="flag-area">
+          <div class="pole" role="img" aria-label="Indian national flag waving on a pole">
+            <div class="flag" aria-hidden="true">
+              <div class="cloth"></div>
+              <div class="chakra">
+                <div class="rim" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero">
+          <span class="chip" title="Jai Hind!">15 August • 1947 → Today</span>
+          <h2>Happy Independence Day!</h2>
+          <p>
+            A tribute to the Tricolour—Saffron for courage, White for peace & truth, Green for faith & chivalry, and the Ashoka Chakra for eternal progress.
+          </p>
+
+          <div class="countdown" id="countdown" aria-live="polite"></div>
+
+          <div class="controls">
+            <button id="toggleFW" type="button" aria-pressed="true">Toggle Fireworks</button>
+            <button id="fullscreen" type="button">Fullscreen</button>
+            <a class="btn" id="save" download="independence-day.html" href="#">Download this page</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Made with pure HTML/CSS/JS • No libraries • Optimized for mobile & desktop. 🇮🇳
+  </footer>
+
+  <script>
+    // Utility: format date
+    const fmt = new Intl.DateTimeFormat(undefined,{dateStyle:'full', timeStyle:'short'});
+    document.getElementById('today').textContent = fmt.format(new Date());
+
+    // Countdown to 15 August this or next year
+    function nextAug15(){
+      const now = new Date();
+      const y = now.getMonth() > 7 || (now.getMonth() === 7 && now.getDate() > 15) ? now.getFullYear()+1 : now.getFullYear();
+      return new Date(y, 7, 15, 0, 0, 0); // month index 7 = August
+    }
+    const cd = document.getElementById('countdown');
+    function renderCountdown(){
+      const now = new Date();
+      const target = nextAug15();
+      const diff = target - now;
+      const past = diff <= 0;
+      const ms = Math.abs(diff);
+      const s = Math.floor(ms/1000) % 60;
+      const m = Math.floor(ms/60000) % 60;
+      const h = Math.floor(ms/3600000) % 24;
+      const d = Math.floor(ms/86400000);
+      cd.innerHTML = `
+        <div class="tile"><div class="num">${d}</div><div class="lbl">Days</div></div>
+        <div class="tile"><div class="num">${h}</div><div class="lbl">Hours</div></div>
+        <div class="tile"><div class="num">${m}</div><div class="lbl">Minutes</div></div>
+        <div class="tile"><div class="num">${s}</div><div class="lbl">Seconds</div></div>
+      `;
+      cd.previousElementSibling?.setAttribute('aria-label', past ? 'Independence Day ongoing' : 'Countdown to next Independence Day');
+    }
+    renderCountdown();
+    setInterval(renderCountdown, 1000);
+
+    // Fullscreen
+    document.getElementById('fullscreen').addEventListener('click', () => {
+      const el = document.documentElement;
+      if (!document.fullscreenElement) el.requestFullscreen?.(); else document.exitFullscreen?.();
+    });
+
+    // Download this page as HTML
+    (function enableDownload(){
+      const blob = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.getElementById('save');
+      a.href = url;
+      window.addEventListener('beforeunload', () => URL.revokeObjectURL(url));
+    })();
+
+    // Simple fireworks on canvas (lightweight)
+    const canvas = document.getElementById('fw');
+    const ctx = canvas.getContext('2d', { alpha: true });
+    let W = canvas.width = innerWidth; let H = canvas.height = innerHeight;
+    window.addEventListener('resize', () => { W = canvas.width = innerWidth; H = canvas.height = innerHeight; });
+
+    const TAU = Math.PI * 2;
+    const particles = new Set();
+    let fireworksOn = true;
+
+    class Particle{
+      constructor(x,y, vx,vy, life, size){
+        this.x=x; this.y=y; this.vx=vx; this.vy=vy; this.life=life; this.max=life; this.size=size;
+      }
+      step(dt){
+        this.life -= dt; if(this.life<=0) return false;
+        this.vy += 80*dt; // gravity
+        this.x += this.vx*dt; this.y += this.vy*dt;
+        return true;
+      }
+      draw(){
+        const t = this.life/this.max;
+        ctx.globalAlpha = Math.max(t,0) * 0.9;
+        ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,TAU); ctx.fill();
+      }
+    }
+
+    function burst(x,y){
+      const n = 60 + Math.random()*30;
+      const hue = Math.floor(Math.random()*360);
+      ctx.fillStyle = `hsl(${hue},100%,60%)`;
+      for(let i=0;i<n;i++){
+        const a = (i/n)*TAU;
+        const sp = 100+Math.random()*240;
+        const vx = Math.cos(a)*sp, vy = Math.sin(a)*sp;
+        particles.add(new Particle(x,y, vx,vy, 1.4+Math.random()*0.8, 1+Math.random()*2));
+      }
+    }
+
+    function tick(ts){
+      requestAnimationFrame(tick);
+      ctx.clearRect(0,0,W,H);
+      const dt = 1/60;
+      if(fireworksOn && Math.random()<0.06){ burst(80+Math.random()*(W-160), 80+Math.random()*H*0.5); }
+      for(const p of Array.from(particles)){
+        if(!p.step(dt)) particles.delete(p); else p.draw();
+      }
+    }
+    requestAnimationFrame(tick);
+
+    document.getElementById('toggleFW').addEventListener('click', (e)=>{
+      fireworksOn = !fireworksOn; e.currentTarget.setAttribute('aria-pressed', fireworksOn);
+    });
+  </script>
+</body>
+</html>
